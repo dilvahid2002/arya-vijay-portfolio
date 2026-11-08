@@ -26,8 +26,9 @@ const navItems = [
 ];
 
 /* ADD NEW IMAGES HERE
-   Copy one block, give it the next id, then set src, category, title and type.
-   Photos show in this order. File names with spaces or brackets are fine. */
+   Copy one block, give it the next id (highest id shows first), then set
+   src, category, title and type. File names with spaces or brackets are fine.
+   A filter button appears automatically for every new `type`. */
 const photos = [
   { id: 1, src: "/images/saree1.jpg", category: "Traditional", title: "Timeless Elegance", type: "Saree" },
   { id: 2, src: "/images/churidar (1).jpeg", category: "Traditional", title: "Everyday Elegance", type: "Churidar" },
@@ -55,15 +56,20 @@ const photos = [
   { id: 24, src: "/images/saree12.jpg", category: "Traditional", title: "Timeless Drape", type: "Saree" },
   { id: 25, src: "/images/saree13.jpg", category: "Traditional", title: "Regal Moments", type: "Saree" },
   { id: 26, src: "/images/saree14.jpg", category: "Traditional", title: "Pure Tradition", type: "Saree" },
+  { id: 27, src: "/images/Lahanka (1).jpeg", category: "Lahanka", title: "Yes Bharath", type: "Lahanka" },
+  { id: 28, src: "/images/Lahanka (2).jpeg", category: "Lahanka", title: "Yes Bharath", type: "Lahanka" },
+  { id: 29, src: "/images/Lahanka (3).jpeg", category: "Lahanka", title: "Yes Bharath", type: "Lahanka" },
+  { id: 30, src: "/images/Wed-Saree (1).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+  { id: 31, src: "/images/Wed-Saree (2).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+  { id: 32, src: "/images/Wed-Saree (3).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
 ];
 
-// Filter buttons are built from each photo's `type` (Saree, Churidar, ...).
-// A new button appears automatically when you add a photo with a new type.
-const categories = ["All", ...Array.from(new Set(photos.map((p) => p.type)))];
+// Newest (highest id) first. Filter buttons are built from each photo's `type`.
+const sortedPhotos = [...photos].sort((a, b) => b.id - a.id);
+const categories = ["All", ...Array.from(new Set(sortedPhotos.map((p) => p.type)))];
 const PAGE_SIZE = 9;
 
-/* Fill in your real measurements. Leave a value as "—" to hide nothing,
-   or delete the row entirely. */
+/* Fill in your real measurements, or delete a row entirely. */
 const compCard = [
   ["Height", "—"],
   ["Bust", "—"],
@@ -159,7 +165,7 @@ function App() {
   }, []);
 
   const filteredPhotos = useMemo(
-    () => (activeCategory === "All" ? photos : photos.filter((p) => p.type === activeCategory)),
+    () => (activeCategory === "All" ? sortedPhotos : sortedPhotos.filter((p) => p.type === activeCategory)),
     [activeCategory]
   );
 
@@ -393,11 +399,13 @@ function App() {
           <span className="gallery-count">{String(filteredPhotos.length).padStart(2, "0")} IMAGES</span>
         </div>
 
-        <div className="masonry">
+        {/* key={activeCategory} rebuilds the grid on every filter change,
+            so no card keeps showing an old image */}
+        <div className="masonry" key={activeCategory}>
           {filteredPhotos.slice(0, visible).map((photo, index) => (
             <button
               className={`work-card ratio-${photo.ratio || "auto"}`}
-              key={photo.id}
+              key={`${activeCategory}-${photo.id}`}
               onClick={() => setSelectedPhoto(photo)}
               aria-label={`View ${photo.title}`}
               style={{ "--i": index }}
