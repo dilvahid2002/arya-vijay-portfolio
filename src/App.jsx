@@ -62,6 +62,21 @@ const photos = [
   { id: 30, src: "/images/Wed-Saree (1).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
   { id: 31, src: "/images/Wed-Saree (2).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
   { id: 32, src: "/images/Wed-Saree (3).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+   { id: 33, src: "/images/Lahanka (4).jpeg", category: "Lahanka", title: "Yes Bharath", type: "Lahanka" },
+  { id: 34, src: "/images/Lahanka (5).jpeg", category: "Lahanka", title: "Yes Bharath", type: "Lahanka" },
+  { id: 35, src: "/images/Wed-Saree (4).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+  { id: 36, src: "/images/Wed-Saree (5).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+  { id: 37, src: "/images/Wed-Saree (6).jpeg", category: "Wedding Saree", title: "Yes Bharath", type: "Wedding Saree" },
+  { id: 38, src: "/images/churidar (8).jpeg", category: "Traditional", title: "Graceful Lines", type: "Churidar" },
+  { id: 39, src: "/images/churidar (9).jpeg", category: "Traditional", title: "Everyday Elegance", type: "Churidar" },
+  { id: 40, src: "/images/dhavani (1).jpeg", category: "Traditional", title: "Classic Heritage", type: "Dhavani" },
+  { id: 41, src: "/images/dhavani (2).jpeg", category: "Traditional", title: "A Traditional Story", type: "Dhavani" },
+  { id: 42, src: "/images/dhavani (3).jpeg", category: "Traditional", title: "Timeless Elegance", type: "Dhavani" },
+  { id: 43, src: "/images/dhavani (4).jpeg", category: "Traditional", title: "Cultural Charm", type: "Dhavani" },
+  { id: 44, src: "/images/skirt (4).jpeg", category: "Traditional", title: "Playful Heritage", type: "Crop Top & Skirt" },
+  { id: 45, src: "/images/skirt (5).jpeg", category: "Traditional", title: "Tradition Reimagined", type: "Crop Top & Skirt" },
+  { id: 46, src: "/images/skirt (6).jpeg", category: "Traditional", title: "Cultural Charm", type: "Crop Top & Skirt" },
+  { id: 47, src: "/images/skirt (7).jpeg", category: "Traditional", title: "Classic Charm", type: "Crop Top & Skirt" },
 ];
 
 // Newest (highest id) first. Filter buttons are built from each photo's `type`.
