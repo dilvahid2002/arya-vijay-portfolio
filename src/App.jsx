@@ -11,7 +11,8 @@ const PROFILE = {
   last: "Vijay.",
   role: "Model",
   location: "Kerala, India",
-  email: "aryavijay@example.com",
+  email: "aryamvnair@gmail.com",
+  Phone: "+91 96052 98909",
   instagram: "https://instagram.com/",
   year: 2026,
 };
@@ -24,32 +25,41 @@ const navItems = [
   ["Process", "process"],
 ];
 
-/* Gallery — built from the files in /public/images.
-   To add or remove photos, change the count or the filename pattern below.
-   Images keep their natural proportions in the grid. */
-const group = (category, count, file) =>
-  Array.from({ length: count }, (_, i) => ({
-    category,
-    type: category,
-    title: `${category} ${String(i + 1).padStart(2, "0")}`,
-    src: encodeURI(file(i + 1)),
-  }));
-
-const groups = [
-  group("Saree", 14, (n) => `/images/saree${n}.jpg`),
-  group("Churidar", 7, (n) => `/images/churidar (${n}).jpeg`),
-  group("Skirt", 3, (n) => `/images/skirt (${n}).jpeg`),
-  group("Dhavani", 2, (n) => `/images/dhavani${n}.jpg`),
+/* ADD NEW IMAGES HERE
+   Copy one block, give it the next id, then set src, category, title and type.
+   Photos show in this order. File names with spaces or brackets are fine. */
+const photos = [
+  { id: 1, src: "/images/saree1.jpg", category: "Traditional", title: "Timeless Elegance", type: "Saree" },
+  { id: 2, src: "/images/churidar (1).jpeg", category: "Traditional", title: "Everyday Elegance", type: "Churidar" },
+  { id: 3, src: "/images/dhavani1.jpg", category: "Traditional", title: "Classic Heritage", type: "Dhavani" },
+  { id: 4, src: "/images/skirt (1).jpeg", category: "Traditional", title: "Cultural Charm", type: "Crop Top & Skirt" },
+  { id: 5, src: "/images/saree2.jpg", category: "Traditional", title: "The Grace of Tradition", type: "Saree" },
+  { id: 6, src: "/images/churidar (2).jpeg", category: "Traditional", title: "Graceful Lines", type: "Churidar" },
+  { id: 7, src: "/images/dhavani2.jpg", category: "Traditional", title: "A Traditional Story", type: "Dhavani" },
+  { id: 8, src: "/images/skirt (2).jpeg", category: "Traditional", title: "Tradition Reimagined", type: "Crop Top & Skirt" },
+  { id: 9, src: "/images/saree3.jpg", category: "Traditional", title: "Drape & Poise", type: "Saree" },
+  { id: 10, src: "/images/churidar (3).jpeg", category: "Traditional", title: "Festive Ease", type: "Churidar" },
+  { id: 11, src: "/images/skirt (3).jpeg", category: "Traditional", title: "Playful Heritage", type: "Crop Top & Skirt" },
+  { id: 12, src: "/images/saree4.jpg", category: "Traditional", title: "Heritage in Silk", type: "Saree" },
+  { id: 13, src: "/images/churidar (4).jpeg", category: "Traditional", title: "Gentle Colour", type: "Churidar" },
+  { id: 14, src: "/images/saree5.jpg", category: "Traditional", title: "Quiet Radiance", type: "Saree" },
+  { id: 15, src: "/images/churidar (5).jpeg", category: "Traditional", title: "Simple Charm", type: "Churidar" },
+  { id: 16, src: "/images/saree6.jpg", category: "Traditional", title: "Festive Glow", type: "Saree" },
+  { id: 17, src: "/images/churidar (6).jpeg", category: "Traditional", title: "Poised & Playful", type: "Churidar" },
+  { id: 18, src: "/images/saree7.jpg", category: "Traditional", title: "Classic Charm", type: "Saree" },
+  { id: 19, src: "/images/churidar (7).jpeg", category: "Traditional", title: "Ethnic Edit", type: "Churidar" },
+  { id: 20, src: "/images/saree8.jpg", category: "Traditional", title: "Woven Stories", type: "Saree" },
+  { id: 21, src: "/images/saree9.jpg", category: "Traditional", title: "Golden Hour", type: "Saree" },
+  { id: 22, src: "/images/saree10.jpg", category: "Traditional", title: "Rooted Beauty", type: "Saree" },
+  { id: 23, src: "/images/saree11.jpg", category: "Traditional", title: "Soft Grace", type: "Saree" },
+  { id: 24, src: "/images/saree12.jpg", category: "Traditional", title: "Timeless Drape", type: "Saree" },
+  { id: 25, src: "/images/saree13.jpg", category: "Traditional", title: "Regal Moments", type: "Saree" },
+  { id: 26, src: "/images/saree14.jpg", category: "Traditional", title: "Pure Tradition", type: "Saree" },
 ];
 
-// Mix the categories so "All" doesn't show 14 sarees in a row.
-const photos = [];
-for (let i = 0; groups.some((g) => i < g.length); i++) {
-  groups.forEach((g) => g[i] && photos.push(g[i]));
-}
-photos.forEach((p, i) => (p.id = i + 1));
-
-const categories = ["All", ...groups.map((g) => g[0].category)];
+// Filter buttons are built from each photo's `type` (Saree, Churidar, ...).
+// A new button appears automatically when you add a photo with a new type.
+const categories = ["All", ...Array.from(new Set(photos.map((p) => p.type)))];
 const PAGE_SIZE = 9;
 
 /* Fill in your real measurements. Leave a value as "—" to hide nothing,
@@ -120,7 +130,7 @@ function App() {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [activeSection, setActiveSection] = useState("home");
-  const [form, setForm] = useState({ name: "", email: "", company: "", type: "Fashion campaign", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", Phone: "", company: "", type: "Fashion campaign", message: "" });
   const touchX = useRef(null);
 
   useReveal();
@@ -149,7 +159,7 @@ function App() {
   }, []);
 
   const filteredPhotos = useMemo(
-    () => (activeCategory === "All" ? photos : photos.filter((p) => p.category === activeCategory)),
+    () => (activeCategory === "All" ? photos : photos.filter((p) => p.type === activeCategory)),
     [activeCategory]
   );
 
@@ -201,7 +211,7 @@ function App() {
     e.preventDefault();
     const subject = encodeURIComponent(`${form.type} enquiry — ${form.name}`);
     const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nBrand / company: ${form.company || "—"}\nProject type: ${form.type}\n\n${form.message}`
+      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.Phone || "—"}\nBrand / company: ${form.company || "—"}\nProject type: ${form.type}\n\n${form.message}`
     );
     window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
   };
@@ -375,7 +385,7 @@ function App() {
               >
                 {category}
                 <span>
-                  {category === "All" ? photos.length : photos.filter((p) => p.category === category).length}
+                  {category === "All" ? photos.length : photos.filter((p) => p.type === category).length}
                 </span>
               </button>
             ))}
@@ -393,7 +403,7 @@ function App() {
               style={{ "--i": index }}
             >
               <span className="work-image">
-                <img src={photo.src} alt={photo.title} loading="lazy" />
+                <img src={encodeURI(photo.src)} alt={photo.title} loading="lazy" />
                 <span className="work-hover">
                   <span>{photo.type}</span>
                   <b>{photo.title}</b>
@@ -533,6 +543,7 @@ function App() {
             </p>
             <ul className="contact-details">
               <li><span>EMAIL</span><a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a></li>
+              <li><span>PHONE</span><a href={`tel:${PROFILE.Phone.replace(/\s/g, "")}`}>{PROFILE.Phone}</a></li>
               <li><span>BASE</span>{PROFILE.location}</li>
               <li><span>REPLY</span>Within 48 hours</li>
             </ul>
@@ -547,6 +558,10 @@ function App() {
             <label>
               <span>Email</span>
               <input required type="email" value={form.email} onChange={setField("email")} autoComplete="email" />
+            </label>
+            <label>
+              <span>Phone (optional)</span>
+              <input type="tel" value={form.Phone} onChange={setField("Phone")} autoComplete="tel" />
             </label>
             <label>
               <span>Brand / company (optional)</span>
@@ -579,6 +594,7 @@ function App() {
         <div className="footer-links">
           <a href={PROFILE.instagram} target="_blank" rel="noreferrer">INSTAGRAM ↗</a>
           <a href={`mailto:${PROFILE.email}`}>EMAIL ↗</a>
+          <a href={`tel:${PROFILE.Phone.replace(/\s/g, "")}`}>CALL ↗</a>
           <a href="#home">BACK TO TOP ↑</a>
         </div>
         <div className="footer-bottom">
@@ -609,7 +625,7 @@ function App() {
             aria-label="Previous image"
           >←</button>
           <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedPhoto.src} alt={selectedPhoto.title} />
+            <img src={encodeURI(selectedPhoto.src)} alt={selectedPhoto.title} />
             <div className="lightbox-caption">
               <span>{selectedPhoto.type}</span>
               <b>{selectedPhoto.title}</b>
