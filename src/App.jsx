@@ -13,7 +13,7 @@ const PROFILE = {
   location: "Kerala, India",
   email: "aryamvnair@gmail.com",
   Phone: "+91 96052 98909",
-  instagram: "https://instagram.com/",
+  instagram: "https://www.instagram.com/aryamvnair?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw==/",
   year: 2026,
 };
 
